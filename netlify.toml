@@ -1,20 +1,34 @@
 # netlify.toml
 
+# This prebuild script will run before the main build command.
+# It copies the necessary backend data into the functions directory.
+[build.processing]
+  [build.processing.css]
+    bundle = true
+    minify = true
+  [build.processing.html]
+    pretty_urls = true
+  [build.processing.js]
+    bundle = true
+    minify = true
+  [build.processing.images]
+    compress = true
+
 # Base settings for the build
 [build]
   # This tells Netlify that all build-related commands and paths
   # should be run from inside the 'frontend' directory.
   base = "frontend"
-  
-  # This is the command Netlify will run to install dependencies and build your frontend.
-  # It now runs inside the 'frontend' directory.
-  command = "npm install && npm run build"
-  
-  # The publish directory is now relative to the 'base' directory.
-  # So, 'build' points to 'frontend/build'.
+
+  # The main build command for the frontend
+  command = "npm run build"
+
+  # The publish directory is relative to the 'base' directory.
   publish = "build"
 
 # This section tells Netlify where to find the serverless functions.
-# The path is relative to the root of the project.
 [functions]
   directory = "backend/functions"
+  # This ensures fs-extra is installed for our prebuild script
+  node_bundler = "esbuild"
+  included_files = ["../../database.sqlite", "../../data.js"]
