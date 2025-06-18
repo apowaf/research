@@ -1,19 +1,20 @@
 # netlify.toml
 
+# Base settings for the build
 [build]
-  # This is the command Netlify will run to build your frontend
-  command = "npm run build"
+  # This tells Netlify that all build-related commands and paths
+  # should be run from inside the 'frontend' directory.
+  base = "frontend"
   
-  # This is the directory where the serverless functions are located
-  functions = "backend/functions"
+  # This is the command Netlify will run to install dependencies and build your frontend.
+  # It now runs inside the 'frontend' directory.
+  command = "npm install && npm run build"
   
-  # This is the directory that contains the built frontend site
-  publish = "frontend/build"
+  # The publish directory is now relative to the 'base' directory.
+  # So, 'build' points to 'frontend/build'.
+  publish = "build"
 
-[dev]
-  # Settings for local development with `netlify dev` command (optional)
-  command = "npm start"
-  port = 3000
-  publish = "frontend/build"
-  functions = "backend/functions"
-  targetPort = 5000
+# This section tells Netlify where to find the serverless functions.
+# The path is relative to the root of the project.
+[functions]
+  directory = "backend/functions"
