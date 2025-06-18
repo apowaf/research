@@ -1,17 +1,20 @@
 # netlify.toml
+# This file correctly configures the build for a monorepo structure.
 
-# Build settings for the frontend
+# Main build settings, run from the project's root directory.
 [build]
-  # Set the base directory to the frontend folder
-  base = "frontend"
-  # The build command will now run from inside the 'frontend' directory
+  # This command uses the scripts in your root package.json to install
+  # all dependencies and then build the frontend application.
   command = "npm install && npm run build"
-  # The publish directory is relative to the 'base' directory
-  publish = "build"
+
+  # The directory containing your built frontend, relative to the root.
+  publish = "frontend/build"
 
 # Serverless Functions settings
 [functions]
-  # The functions directory is relative to the project root
+  # The directory containing your serverless functions, relative to the root.
   directory = "backend/functions"
-  # This is the key: it copies these files into the functions' deployment package so they can be found
-  included_files = ["backend/database.sqlite", "backend/data.js"]
+
+  # CRITICAL: This copies your data and database files into the deployment
+  # package so your live server function can access them.
+  included_files = ["backend/data.js", "backend/database.sqlite"]
