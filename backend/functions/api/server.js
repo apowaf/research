@@ -6,28 +6,26 @@ const serverless = require('serverless-http');
 const cors = require('cors');
 const path = require('path');
 
-// Import queries from the data file, which should be one level up
-const { queries } = require('../../data.js');
+// In Netlify, included_files are placed at the root of the function's directory.
+// We resolve the path from the current file's directory (__dirname) to find them.
+const dataPath = path.resolve(__dirname, '..', 'data.js');
+const dbPath = path.resolve(__dirname, '..', 'database.sqlite');
 
+const { queries } = require(dataPath);
 const app = express();
-// Note: We need to construct the path to the database file
-// It will be at the root of the deployed function folder
-const DB_PATH = path.resolve(__dirname, '..', '..', 'database.sqlite');
 
-// --- Middleware ---
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
 
-const db = new sqlite3.Database(DB_PATH, (err) => {
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
+        // This will show up in your Netlify function logs if there's an error
         console.error("Error connecting to the database:", err.message);
     } else {
         console.log("Successfully connected to the SQLite database.");
     }
 });
 
-// --- API Routes ---
-// We prefix routes with '/api' to match our frontend calls
 const router = express.Router();
 
 router.get('/queries', (req, res) => {
@@ -48,7 +46,7 @@ router.post('/query', (req, res) => {
     });
 });
 
-// Use the router for all API requests
+// This path is what your frontend calls
 app.use('/.netlify/functions/api', router);
 
 // Export the handler for Netlify
