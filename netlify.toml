@@ -1,0 +1,19 @@
+# netlify.toml
+
+[build]
+  # This is the command Netlify will run to build your frontend
+  command = "npm run build"
+  
+  # This is the directory where the serverless functions are located
+  functions = "backend/functions"
+  
+  # This is the directory that contains the built frontend site
+  publish = "frontend/build"
+
+[dev]
+  # Settings for local development with `netlify dev` command (optional)
+  command = "npm start"
+  port = 3000
+  publish = "frontend/build"
+  functions = "backend/functions"
+  targetPort = 5000

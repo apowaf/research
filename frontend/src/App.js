@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 // All styling is handled by Tailwind CSS, which is linked in the public/index.html file.
 
 // The base URL of our Node.js backend server
-const API_URL = 'http://localhost:3001';
+// const API_URL = 'http://localhost:3001';
+const API_URL = '/.netlify/functions/api';
 
 function App() {
   // State variables to manage the UI
