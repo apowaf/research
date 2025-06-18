@@ -1,18 +1,21 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node -e \"const { copySync } = require('fs-extra'); try { copySync('./data.js', './functions/api/data.js'); copySync('./database.sqlite', './functions/api/database.sqlite'); console.log('Data files copied successfully.'); } catch (e) { console.error('Error copying data files:', e); }\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "fs-extra": "^11.3.0",
+    "express": "^4.19.2",
+    "fs-extra": "^11.2.0",
+    "serverless-http": "^3.2.0",
     "sqlite3": "^5.1.7"
   }
 }
