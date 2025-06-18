@@ -1,0 +1,8 @@
+/* This file can be left empty. 
+  The primary styling is handled by Tailwind CSS, which is linked in public/index.html.
+  The 'Inter' font and a default background color are also set there.
+*/
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f4f6; /* Equivalent to Tailwind's bg-gray-100 */
+}
