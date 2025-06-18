@@ -9,37 +9,3 @@
   "author": "",
   "license": "ISC"
 }
-```
-
-### 2. The Final `netlify.toml` (Updated)
-
-Now, we will simplify your `netlify.toml` file to use the new root `package.json` we just created.
-
-* In the **root of your project (`FINALS`)**, replace the entire contents of your `netlify.toml` file with this final version.
-
-
-```toml
-# netlify.toml
-
-# This file now correctly configures the build for a monorepo structure.
-
-[build]
-  # The root 'package.json' handles the 'npm install' and 'npm run build' commands.
-  # Netlify will run 'npm install' and then 'npm run build' from the root.
-  command = "npm install && npm run build"
-  
-  # The directory containing the serverless functions, relative to the root.
-  functions = "backend/functions"
-  
-  # The directory to publish, relative to the root.
-  # The root 'build' script builds the frontend into this folder.
-  publish = "frontend/build"
-
-# Optional: Redirect all non-API requests to the React app's index.html
-# This is crucial for handling client-side routing in React.
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  # Exclude the API path from being redirected.
-  conditions = {Path = ["!/.netlify/functions/*"]}
